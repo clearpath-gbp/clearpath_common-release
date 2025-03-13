@@ -131,17 +131,13 @@ class LaunchFile():
                  name: str,
                  path: str = 'launch',
                  package: Package = None,
-                 args: List[tuple] = None,
-                 filename: str = None,
+                 args: List[tuple] = None
                  ) -> None:
         self.package = package
         self.path = path
         self.name = 'launch_' + name
         self.declaration = 'launch_file_{0}'.format(name)
-        if filename:
-            self.file = '{0}.launch.py'.format(filename)
-        else:
-            self.file = '{0}.launch.py'.format(name)
+        self.file = '{0}.launch.py'.format(name)
         self.args = args
 
     def get_full_path(self):

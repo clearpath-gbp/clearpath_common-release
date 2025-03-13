@@ -2,30 +2,16 @@
 Changelog for package clearpath_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.2.0 (2025-03-11)
+1.2.0 (2025-03-13)
 ------------------
 
-2.1.0 (2025-01-31)
+1.1.1 (2025-01-16)
 ------------------
 
-2.0.3 (2025-01-21)
+1.1.0 (2025-01-15)
 ------------------
-
-2.0.2 (2025-01-20)
-------------------
-
-2.0.1 (2025-01-17)
-------------------
-
-2.0.0 (2025-01-16)
-------------------
-* Add `enable_ekf` launch parameter to platform -> localization launch files. Disable the EKF node if enable_ekf is false. (`#133 <https://github.com/clearpathrobotics/clearpath_common/issues/133>`_)
-* Added minimum version.
-* Remove all references to clearpath_platform
-* Move platform.launch.py to clearpath_common metapackage
-* Remove all references to clearpath_platform
-* Move platform.launch.py to clearpath_common metapackage
-* Contributors: Chris Iverach-Brereton, Luis Camero, Tony Baltovski
+* Add `enable_ekf` launch parameter to platform -> localization launch files. Disable the EKF node if enable_ekf is false. (`#133 <https://github.com/clearpathrobotics/clearpath_common/issues/133>`_) (`#134 <https://github.com/clearpathrobotics/clearpath_common/issues/134>`_)
+* Contributors: Chris Iverach-Brereton
 
 1.0.0 (2024-11-25)
 ------------------
