@@ -2,6 +2,14 @@
 Changelog for package clearpath_sensors_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2025-03-13)
+------------------
+* Feature Humble Ouster (`#161 <https://github.com/clearpathrobotics/clearpath_common/issues/161>`_)
+  * Add OusteOS1 description
+  * Custom OusterOS1 generator
+  * Ouster use custom description generator
+* Contributors: luis-camero
+
 1.1.1 (2025-01-16)
 ------------------
 
