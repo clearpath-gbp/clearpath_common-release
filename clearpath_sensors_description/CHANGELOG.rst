@@ -2,6 +2,9 @@
 Changelog for package clearpath_sensors_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2025-04-07)
+------------------
+
 2.2.0 (2025-03-11)
 ------------------
 * Feature Jazzy Ouster (`#170 <https://github.com/clearpathrobotics/clearpath_common/issues/170>`_)
