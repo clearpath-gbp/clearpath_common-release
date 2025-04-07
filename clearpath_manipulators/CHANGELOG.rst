@@ -2,15 +2,27 @@
 Changelog for package clearpath_manipulators
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2025-03-13)
+2.2.1 (2025-04-07)
 ------------------
-* Feature: MoveIt Parameters and Enable (`#166 <https://github.com/clearpathrobotics/clearpath_common/issues/166>`_)
+* Fix: Rename ompl to _ompl and update to match Jazzy (`#186 <https://github.com/clearpathrobotics/clearpath_common/issues/186>`_)
 * Contributors: luis-camero
 
-1.1.1 (2025-01-16)
+2.2.0 (2025-03-11)
 ------------------
 
-1.1.0 (2025-01-15)
+2.1.0 (2025-01-31)
+------------------
+
+2.0.3 (2025-01-21)
+------------------
+
+2.0.2 (2025-01-20)
+------------------
+
+2.0.1 (2025-01-17)
+------------------
+
+2.0.0 (2025-01-16)
 ------------------
 
 1.0.0 (2024-11-25)

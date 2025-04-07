@@ -36,6 +36,7 @@ from clearpath_config.sensors.types.cameras import (
     BaseCamera,
     FlirBlackfly,
     IntelRealsense,
+    LuxonisOAKD,
     StereolabsZed
 )
 from clearpath_config.sensors.types.imu import (
@@ -45,7 +46,12 @@ from clearpath_config.sensors.types.imu import (
     RedshiftUM7
 )
 from clearpath_config.sensors.types.lidars_2d import BaseLidar2D, HokuyoUST, SickLMS1XX
-from clearpath_config.sensors.types.lidars_3d import BaseLidar3D, OusterOS1, VelodyneLidar
+from clearpath_config.sensors.types.lidars_3d import (
+    BaseLidar3D,
+    OusterOS1,
+    SeyondLidar,
+    VelodyneLidar,
+)
 from clearpath_config.sensors.types.sensor import BaseSensor
 
 
@@ -101,7 +107,7 @@ class SensorDescription():
                 self.MAXIMUM_ANGLE: sensor.max_angle,
                 self.MINIMUM_RANGE: 0.05,
                 self.MAXIMUM_RANGE: 25.0,
-                self.UPDATE_RATE: 50
+                self.UPDATE_RATE: 40  # TODO: link to clearpath_config property
             })
 
     class Lidar3dDescription(BaseDescription):
@@ -127,7 +133,7 @@ class SensorDescription():
                 self.MAXIMUM_ANGLE_V: 0.261799,
                 self.MINIMUM_RANGE: 0.9,
                 self.MAXIMUM_RANGE: 130.0,
-                self.UPDATE_RATE: 50
+                self.UPDATE_RATE: 20  # TODO: link to clearpath_config property
             })
 
     class OusterOS1Description(Lidar3dDescription):
@@ -151,7 +157,7 @@ class SensorDescription():
             super().__init__(sensor)
 
             self.parameters.update({
-                self.UPDATE_RATE: 100
+                self.UPDATE_RATE: sensor.update_rate
             })
 
     class CameraDescription(BaseDescription):
@@ -171,12 +177,13 @@ class SensorDescription():
             super().__init__(sensor)
 
             self.parameters.update({
-                self.MODEL: sensor.device_type
+                self.MODEL: sensor.device_type,
             })
 
     class IntelRealsenseDescription(CameraDescription):
         IMAGE_WIDTH = 'image_width'
         IMAGE_HEIGHT = 'image_height'
+        MODEL = 'model'
 
         def __init__(self, sensor: IntelRealsense) -> None:
             super().__init__(sensor)
@@ -184,6 +191,17 @@ class SensorDescription():
             self.parameters.update({
                 self.IMAGE_HEIGHT: sensor.color_height,
                 self.IMAGE_WIDTH: sensor.color_width,
+                self.MODEL: sensor.device_type,
+            })
+
+    class LuxonisOAKDDescroption(CameraDescription):
+        MODEL = 'model'
+
+        def __init__(self, sensor: LuxonisOAKD) -> None:
+            super().__init__(sensor)
+
+            self.parameters.update({
+                self.MODEL: sensor.device_type,
             })
 
     class StereolabsZedDescription(CameraDescription):
@@ -204,10 +222,12 @@ class SensorDescription():
         AxisCamera.SENSOR_MODEL: AxisCameraDescription,
         Microstrain.SENSOR_MODEL: ImuDescription,
         OusterOS1.SENSOR_MODEL: OusterOS1Description,
+        SeyondLidar.SENSOR_MODEL: Lidar3dDescription,
         VelodyneLidar.SENSOR_MODEL: Lidar3dDescription,
         CHRoboticsUM6.SENSOR_MODEL: ImuDescription,
         RedshiftUM7.SENSOR_MODEL: ImuDescription,
         StereolabsZed.SENSOR_MODEL: StereolabsZedDescription,
+        LuxonisOAKD.SENSOR_MODEL: LuxonisOAKDDescroption,
     }
 
     def __new__(cls, sensor: BaseSensor) -> BaseDescription:
