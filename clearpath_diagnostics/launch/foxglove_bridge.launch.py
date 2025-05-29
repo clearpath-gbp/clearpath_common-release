@@ -1,7 +1,7 @@
 # Software License Agreement (BSD)
 #
-# @author    Chris Iverach-Brereton <civerachb@clearpathrobotics.com>
-# @copyright (c) 2024, Clearpath Robotics, Inc., All rights reserved.
+# @author    Luis Camero <lcamero@clearpathrobotics.com>
+# @copyright (c) 2025, Clearpath Robotics, Inc., All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -25,39 +25,42 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-from glob import glob
-import os
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
-from setuptools import setup
 
+def generate_launch_description():
+    namespace = LaunchConfiguration('namespace')
+    parameters = LaunchConfiguration('parameters')
 
-package_name = 'clearpath_bt_joy'
+    arg_namespace = DeclareLaunchArgument(
+        'namespace',
+        default_value='',
+        description='Robot namespace, applied to diagnostic nodes and topics')
 
-setup(
-    name=package_name,
-    version='2.5.0',
-    packages=[
-        package_name,
-    ],
-    data_files=[
-        # Install marker file in the package index
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-        # Include the package.xml file
-        (os.path.join('share', package_name), ['package.xml']),
-    ],
-    install_requires=[
-        'setuptools',
-    ],
-    zip_safe=True,
-    maintainer='Chris Iverach-Brereton',
-    maintainer_email='civerachb@clearpathrobotics.com',
-    description='Clearpath joy controller link quality monitor',
-    license='BSD-3',
-    tests_require=['pytest'],
-    entry_points={
-        'console_scripts': [
-            'clearpath_bt_joy_cutoff_node = clearpath_bt_joy.clearpath_bt_joy_cutoff_node:main'
-        ],
-    },
-)
+    arg_parameters = DeclareLaunchArgument(
+        'parameters',
+        default_value=PathJoinSubstitution([
+          FindPackageShare('clearpath_diagnostics'),
+          'config',
+          'foxglove_bridge.yaml']),
+        description='Foxglove Bridge node parameters')
+
+    node_bridge = Node(
+        package='foxglove_bridge',
+        executable='foxglove_bridge',
+        namespace=namespace,
+        output='screen',
+        parameters=[parameters],
+        additional_env={'ROS_SUPER_CLIENT': 'True'},
+    )
+
+    ld = LaunchDescription()
+    ld.add_action(arg_namespace)
+    ld.add_action(arg_parameters)
+    ld.add_action(node_bridge)
+
+    return ld
