@@ -8,6 +8,9 @@ Changelog for package clearpath_diagnostics
 2.3.3 (2025-04-17)
 ------------------
 
+2.5.1 (2025-06-17)
+------------------
+
 2.5.0 (2025-05-29)
 ------------------
 * Allow broad window of BMS message rates (`#218 <https://github.com/clearpathrobotics/clearpath_common/issues/218>`_)
