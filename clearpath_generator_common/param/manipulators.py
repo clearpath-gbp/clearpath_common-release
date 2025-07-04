@@ -33,7 +33,7 @@ import os
 
 from clearpath_config.clearpath_config import ClearpathConfig
 from clearpath_config.common.utils.dictionary import merge_dict, replace_dict_items
-from clearpath_config.manipulators.types.arms import Franka
+from clearpath_config.manipulators.types.arms import Franka, UniversalRobots
 from clearpath_config.manipulators.types.grippers import FrankaGripper
 from clearpath_generator_common.common import MoveItParamFile, Package, ParamFile
 from clearpath_generator_common.param.writer import ParamWriter
@@ -107,17 +107,47 @@ class ManipulatorParam():
                         arm_param_file.parameters,
                         {r'${name}': f'{arm.name}_{arm.arm_id}'}
                     )
+                    extra_parameters = replace_dict_items(
+                        arm.ros_parameters,
+                        {r'${name}': f'{arm.name}_{arm.arm_id}'}
+                    )
                 else:
                     updated_parameters = replace_dict_items(
                         arm_param_file.parameters,
                         {r'${name}': arm.name}
                     )
+                    extra_parameters = replace_dict_items(
+                        arm.ros_parameters,
+                        {r'${name}': arm.name}
+                    )
+                # UR Arm Exception. Update Rate
+                if arm.MANIPULATOR_MODEL == UniversalRobots.MANIPULATOR_MODEL:
+                    try:
+                        # Update Rate from Parameter File
+                        update_rate_param_file = ParamFile(
+                            name=f'{arm.ur_type}_update_rate',
+                            package=Package('ur_robot_driver'),
+                            path='config',
+                            parameters={}
+                        )
+                        update_rate_param_file.read()
+                        updated_parameters.update(update_rate_param_file.parameters)
+                    except Exception as e:
+                        print(f'Unable to get UniversalRobots {arm.ur_type}_'
+                              f'update_rate.yaml parameter file: {e.args[0]}')
                 updated_parameters = replace_dict_items(
                     updated_parameters,
                     {r'${controller_name}': arm.name}
                 )
+                extra_parameters = replace_dict_items(
+                    extra_parameters,
+                    {r'${controller_name}': arm.name}
+                )
                 self.param_file.parameters = merge_dict(
-                    self.param_file.parameters, updated_parameters)
+                    updated_parameters, self.param_file.parameters)
+                # Overwrite ros parameters with extra
+                self.param_file.parameters = merge_dict(
+                    extra_parameters, self.param_file.parameters)
             # Grippers
             for arm in self.clearpath_config.manipulators.get_all_arms():
                 if not arm.gripper:
@@ -139,17 +169,34 @@ class ManipulatorParam():
                         gripper_param_file.parameters,
                         {r'${name}': f'{gripper.name}_{gripper.arm_id}'}
                     )
+                    extra_parameters = replace_dict_items(
+                        gripper.ros_parameters,
+                        {r'${name}': f'{gripper.name}_{gripper.arm_id}'}
+                    )
                 else:
                     updated_parameters = replace_dict_items(
                         gripper_param_file.parameters,
+                        {r'${name}': gripper.name}
+                    )
+                    extra_parameters = replace_dict_items(
+                        gripper.ros_parameters,
                         {r'${name}': gripper.name}
                     )
                 updated_parameters = replace_dict_items(
                     updated_parameters,
                     {r'${controller_name}': gripper.name}
                 )
+                extra_parameters = replace_dict_items(
+                    extra_parameters,
+                    {r'${controller_name}': gripper.name}
+                )
+
                 self.param_file.parameters = merge_dict(
                     self.param_file.parameters, updated_parameters)
+
+                # Overwrite ros parameters with extra
+                self.param_file.parameters = merge_dict(
+                    extra_parameters, self.param_file.parameters)
 
             # Lifts
             for lift in self.clearpath_config.manipulators.get_all_lifts():
@@ -167,8 +214,26 @@ class ManipulatorParam():
                     lift_param_file.parameters,
                     {r'${name}': lift.name}
                 )
+                updated_parameters = replace_dict_items(
+                    updated_parameters,
+                    {r'${controller_name}': lift.name}
+                )
+
+                extra_parameters = replace_dict_items(
+                    lift.ros_parameters,
+                    {r'${name}': lift.name}
+                )
+                extra_parameters = replace_dict_items(
+                    extra_parameters,
+                    {r'${controller_name}': lift.name}
+                )
+
                 self.param_file.parameters = merge_dict(
                     self.param_file.parameters, updated_parameters)
+
+                # Overwrite ros parameters with extra
+                self.param_file.parameters = merge_dict(
+                    extra_parameters, self.param_file.parameters)
 
         def generate_parameter_file(self):
             param_writer = ParamWriter(self.param_file)
