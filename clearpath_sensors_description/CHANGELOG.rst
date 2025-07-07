@@ -2,6 +2,9 @@
 Changelog for package clearpath_sensors_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.6.1 (2025-07-07)
+------------------
+
 2.6.0 (2025-07-04)
 ------------------
 * Add A300 AMP attachments (`#200 <https://github.com/clearpathrobotics/clearpath_common/issues/200>`_)
