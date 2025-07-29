@@ -2,6 +2,11 @@
 Changelog for package clearpath_generator_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.6.4 (2025-07-29)
+------------------
+* Fix: Update diagnostics rate for Inventus  (`#243 <https://github.com/clearpathrobotics/clearpath_common/issues/243>`_)
+* Contributors: luis-camero
+
 2.6.3 (2025-07-18)
 ------------------
 
