@@ -23,7 +23,7 @@
     <xacro:property name="deck_height" value="0.280" />
     <xacro:property name="deck_thickness" value="0.005" />
 
-    <xacro:property name="riser_height" value="0.070" />
+    <xacro:property name="riser_height" value="0.055" />
 
     <xacro:property name="axle_offset" value="0.0500" />
     <xacro:property name="rocker_offset" value="0.319" />
@@ -127,7 +127,7 @@
         <geometry>
           <mesh filename="package://clearpath_platform_description/meshes/r100/end-cover.stl" />
         </geometry>
-        <material name="clearpath_red" />
+        <material name="clearpath_black" />
       </visual>
     </link>
 
@@ -158,7 +158,7 @@
         <geometry>
           <mesh filename="package://clearpath_platform_description/meshes/r100/lights.stl" />
         </geometry>
-        <material name="clearpath_black" />
+        <material name="clearpath_red" />
       </visual>
     </link>
 
@@ -234,7 +234,7 @@
     </xacro:r100_rocker>
 
     <gazebo>
-      <plugin filename="libgz-sim-wheel-slip-system.so" name="gz::sim::systems::WheelSlip">
+      <plugin filename="libignition-gazebo-wheel-slip-system.so" name="ignition::gazebo::systems::WheelSlip">
         <wheel link_name="front_left_wheel_link">
           <slip_compliance_lateral>1.0</slip_compliance_lateral>
           <slip_compliance_longitudinal>1.0</slip_compliance_longitudinal>
@@ -281,7 +281,7 @@
         <always_on>true</always_on>
         <update_rate>50</update_rate>
         <visualize>true</visualize>
-        <gz_frame_id>imu_0_link</gz_frame_id>
+        <ignition_frame_id>imu_0_link</ignition_frame_id>
       </sensor>
     </gazebo>
 
