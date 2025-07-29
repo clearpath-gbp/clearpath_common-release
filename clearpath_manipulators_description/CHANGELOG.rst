@@ -2,70 +2,86 @@
 Changelog for package clearpath_manipulators_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.5 (2025-07-29)
+2.6.4 (2025-07-29)
 ------------------
-* Feature: Franka Hand (`#244 <https://github.com/clearpathrobotics/clearpath_common/issues/244>`_)
-  * Remove ros2_control controllers
-  * Move gazebo control to a separate file
+
+2.6.3 (2025-07-18)
+------------------
+* Fix: Ewellix Gazebo Migration (`#236 <https://github.com/clearpathrobotics/clearpath_common/issues/236>`_)
 * Contributors: luis-camero
 
-1.3.4 (2025-07-17)
+2.6.2 (2025-07-14)
 ------------------
-* Fix: Franka Update (`#238 <https://github.com/clearpathrobotics/clearpath_common/issues/238>`_)
-  * Pass version parameter to Franka Hardware Interface
-  * Use franka_arm macro and always add position and velocity interfaces
-  * Only use effort
-* Contributors: luis-camero
 
-1.3.3 (2025-07-03)
+2.6.1 (2025-07-07)
 ------------------
-* Fix/Feature: UR Arm Controller Update Rate (`#225 <https://github.com/clearpathrobotics/clearpath_common/issues/225>`_)
+* Forward Fix: Universal Robots Rate (`#233 <https://github.com/clearpathrobotics/clearpath_common/issues/233>`_)
+  * Fix/Feature: UR Arm Controller Update Rate (`#225 <https://github.com/clearpathrobotics/clearpath_common/issues/225>`_)
   * Change controller update rate for universal robots to 500
   * Use UniversalRobots update_rate parameters if available
+  * Remove Franka
 * Contributors: luis-camero
 
-1.3.2 (2025-04-15)
+2.6.0 (2025-07-04)
 ------------------
 
-1.3.1 (2025-04-15)
+2.5.1 (2025-06-17)
 ------------------
 
-1.3.0 (2025-04-15)
+2.5.0 (2025-05-29)
 ------------------
 
-1.2.0 (2025-03-13)
-------------------
-* Feature Franka (`#171 <https://github.com/clearpathrobotics/clearpath_common/issues/171>`_)
-  * Initial franka addition
-  * Create joint instead of using connected_to parameter
-  * Custom entry for generating Franka param
-  * Franka control for multiple types
-  * Modify entire Franka arm xacro
-  * Add franka gripper
-  * Copy and modify franka description
-  * Add cutout for Franka arm_id
-  * Add dependency for franka_description
-* Feature: Manipulator Samples and Poses (`#163 <https://github.com/clearpathrobotics/clearpath_common/issues/163>`_)
-  * Add group_state macros to arm SRDF
-  * Add group_state macros to grippers SRDF
-  * Generate pose macros in URDF
-* Fix: Isolate Universal Robots driver and client library dependencies (`#164 <https://github.com/clearpathrobotics/clearpath_common/issues/164>`_)
-* Contributors: luis-camero
-
-1.1.1 (2025-01-16)
+2.3.2 (2025-04-30)
 ------------------
 
-1.1.0 (2025-01-15)
+2.3.1 (2025-04-16)
 ------------------
-* Ewellix Lift (`#136 <https://github.com/clearpathrobotics/clearpath_common/issues/136>`_)
+
+2.3.0 (2025-04-11)
+------------------
+* Feature: Manipulator Samples and Poses (`#163 <https://github.com/clearpathrobotics/clearpath_common/issues/163>`_) (`#188 <https://github.com/clearpathrobotics/clearpath_common/issues/188>`_)
+* Contributors: Luis Camero
+
+2.2.2 (2025-04-09)
+------------------
+* Fast Forward Fix: Isolate UR Client Library in URDF (`#195 <https://github.com/clearpathrobotics/clearpath_common/issues/195>`_)
+  * Fix: Isolate Universal Robots driver and client library dependencies (`#164 <https://github.com/clearpathrobotics/clearpath_common/issues/164>`_)
+  * Update fake to mock
+* Contributors: Luis Camero
+
+2.2.1 (2025-04-07)
+------------------
+
+2.2.0 (2025-03-11)
+------------------
+
+2.1.0 (2025-01-31)
+------------------
+* Ewellix Lift (`#136 <https://github.com/clearpathrobotics/clearpath_common/issues/136>`_) (`#153 <https://github.com/clearpathrobotics/clearpath_common/issues/153>`_)
   Ewellix Lift
-  -  Remove upper_joint
-  - Add moveit jpc
-  - Add control for joint position controller
-  - Add hardware parameters
+  - Add lift description
   - Add lifts to generators
-  - Initial add of Ewellix lift description files
-* Contributors: luis-camero
+* Updated URDF
+* Contributors: Luis Camero
+
+2.0.3 (2025-01-21)
+------------------
+
+2.0.2 (2025-01-20)
+------------------
+
+2.0.1 (2025-01-17)
+------------------
+
+2.0.0 (2025-01-16)
+------------------
+* Add PTZ sim support (`#125 <https://github.com/clearpathrobotics/clearpath_common/issues/125>`_)
+  * Now that axis_camera is released via OSRF, depend on the official package, remove duplicate meshes
+  * Rename Gazebo plugins for Jazzy compatibility
+  * Modify Axis camera URDFs to using the axis_camera meshes. This lets us control the gazebo topics. Fix the GZ topic names. Camera data is now visible in the simulation
+  * Add joint controllers for the pan & tilt actuators. This provides velocity control over the simulated camera
+* Rename ign\_ -> gz\_ for gazebo dependencies, comment-out missing jazzy dependencies (for now)
+* Contributors: Chris Iverach-Brereton, Tony Baltovski, luis-camero
 
 1.0.0 (2024-11-25)
 ------------------
