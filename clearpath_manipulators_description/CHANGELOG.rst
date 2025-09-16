@@ -2,6 +2,9 @@
 Changelog for package clearpath_manipulators_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.7.3 (2025-09-16)
+------------------
+
 2.7.2 (2025-09-08)
 ------------------
 * Fix: franka_description dependency (`#258 <https://github.com/clearpathrobotics/clearpath_common/issues/258>`_)
