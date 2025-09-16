@@ -2,6 +2,9 @@
 Changelog for package clearpath_platform_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.7.3 (2025-09-16)
+------------------
+
 2.7.2 (2025-09-08)
 ------------------
 * Fix: Use Platform Controllers (`#257 <https://github.com/clearpathrobotics/clearpath_common/issues/257>`_)
