@@ -2,6 +2,12 @@
 Changelog for package clearpath_manipulators_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.7 (2025-09-18)
+------------------
+* Fix: Lift URDF Parameters (`#267 <https://github.com/clearpathrobotics/clearpath_common/issues/267>`_)
+  Pass 'add_mount' parameter to URDF
+* Contributors: luis-camero
+
 1.3.6 (2025-08-26)
 ------------------
 * Add ewellix_description dependency (`#144 <https://github.com/clearpathrobotics/clearpath_common/issues/144>`_)
