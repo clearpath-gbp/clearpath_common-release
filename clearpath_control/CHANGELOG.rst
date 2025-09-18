@@ -2,47 +2,181 @@
 Changelog for package clearpath_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.7 (2025-09-18)
+2.7.4 (2025-09-18)
 ------------------
 
-1.3.6 (2025-08-26)
+2.7.3 (2025-09-16)
 ------------------
 
-1.3.5 (2025-07-29)
+2.7.2 (2025-09-08)
 ------------------
 
-1.3.4 (2025-07-17)
+2.7.1 (2025-09-08)
+------------------
+* Disable prefixing of links by mecanum controller (`#256 <https://github.com/clearpathrobotics/clearpath_common/issues/256>`_)
+* Contributors: luis-camero
+
+2.7.0 (2025-08-25)
+------------------
+* Drivetrains (`#237 <https://github.com/clearpathrobotics/clearpath_common/issues/237>`_)
+  * Moved meshes to wheels folder
+  Mecanum drivetrain for do100
+  * Generic drivetrain URDFs
+  * Pass hardware plugin string rather than block
+  * Added drivetrain control parameters
+  * Removed 2WD for Dingo-O
+  * DO150
+  * Dingo-D
+  * R100
+  * A300 urdf
+  * Fixed xacro generate print
+  * Generic teleop configs per controller
+  Platform specific teleop only defines velocity limits
+  * A200 drivetrain changes
+  * W200 drivetrain urdf
+  * Updated A300 meshes
+  Mecanum and caster support
+  * Separated caster wheel into swivel and wheel links
+  * Fixed joystick axis mapping
+  * Updated wheel_separation_multiplier for fwd and rwd on A300
+  * URDF structure changes for J100
+  Updated A200 and W200 to be 4WD
+  * Linting
+* Contributors: Roni Kreinin
+
+2.6.4 (2025-07-29)
 ------------------
 
-1.3.3 (2025-07-03)
+2.6.3 (2025-07-18)
 ------------------
-* Add missing linear.y teleop parameters, adjust logitech gains to match equivalents from ps4 configuration (`#220 <https://github.com/clearpathrobotics/clearpath_common/issues/220>`_)
+
+2.6.2 (2025-07-14)
+------------------
+
+2.6.1 (2025-07-07)
+------------------
+
+2.6.0 (2025-07-04)
+------------------
+* Re-enable publishing controller input to joy_teleop/cmd_vel (`#232 <https://github.com/clearpathrobotics/clearpath_common/issues/232>`_)
+* Fix: W200 Diff Drive Parameters (`#228 <https://github.com/clearpathrobotics/clearpath_common/issues/228>`_)
+  * Disable using position for odom
+  * Lower acceleration to reasonable values
+* Feature/lynx 1.0.0 (`#226 <https://github.com/clearpathrobotics/clearpath_common/issues/226>`_)
+  * Added deceleration limits to A300
+  * Update to A300 angular parameters
+  * Reduced angular velocity defaults for controllers
+* Drop A200 controller manager update rate (`#224 <https://github.com/clearpathrobotics/clearpath_common/issues/224>`_)
+  the update rate is limited by the mcu capabilities
+* Contributors: Chris Iverach-Brereton, Hilary Luo, Roni Kreinin, luis-camero
+
+2.5.1 (2025-06-17)
+------------------
+
+2.5.0 (2025-05-29)
+------------------
+* Fix the velocity limits for Dingo-O using Logitech controllers (`#207 <https://github.com/clearpathrobotics/clearpath_common/issues/207>`_)
+* Increase A300 teleop normal speed to 0.4, reduce turbo speed to 1.5 (`#206 <https://github.com/clearpathrobotics/clearpath_common/issues/206>`_)
 * Contributors: Chris Iverach-Brereton
 
-1.3.2 (2025-04-15)
+2.3.2 (2025-04-30)
 ------------------
 
-1.3.1 (2025-04-15)
+2.3.1 (2025-04-16)
 ------------------
 
-1.3.0 (2025-04-15)
+2.3.0 (2025-04-11)
+------------------
+* [clearpath_control] Added remapping for upstream mecanum controller. (`#199 <https://github.com/clearpathrobotics/clearpath_common/issues/199>`_)
+* Re-add reference remapping (`#198 <https://github.com/clearpathrobotics/clearpath_common/issues/198>`_)
+* added cmd_vel_out to dingo Ds
+* remove duplicate remap
+* Jazzy dingo and ridgeback fixes (`#179 <https://github.com/clearpathrobotics/clearpath_common/issues/179>`_)
+  * Updated mecanum controller type
+  * Changed puma control frequency to 20hz
+  * Added mecanum package dep
+* initial changes for adding the linited velocity output
+* Ensure the right horizontal axis is used for yaw control, left horizontal axis for linear-y (`#178 <https://github.com/clearpathrobotics/clearpath_common/issues/178>`_)
+* Contributors: Chris Iverach-Brereton, José Mastrangelo, Roni Kreinin, Tony Baltovski, luis-camero
+
+2.2.2 (2025-04-09)
 ------------------
 
-1.2.0 (2025-03-13)
+2.2.1 (2025-04-07)
 ------------------
-* Backport Fix: Sensor depends (`#129 <https://github.com/clearpathrobotics/clearpath_common/issues/129>`_) (`#167 <https://github.com/clearpathrobotics/clearpath_common/issues/167>`_)
+
+2.2.0 (2025-03-11)
+------------------
+
+2.1.0 (2025-01-31)
+------------------
+* Reduced angular velocity limits from joysticks (`#160 <https://github.com/clearpathrobotics/clearpath_common/issues/160>`_)
+* Feature/ekf diagnostics (`#158 <https://github.com/clearpathrobotics/clearpath_common/issues/158>`_)
+* Diff drive parameter updates for improved odometry (`#155 <https://github.com/clearpathrobotics/clearpath_common/issues/155>`_)
+* Contributors: Hilary Luo, Roni Kreinin
+
+2.0.3 (2025-01-21)
+------------------
+* Bypass bluetooth link quality check (`#151 <https://github.com/clearpathrobotics/clearpath_common/issues/151>`_)
+  * Comment-out the bluetooth cutoff node, the mux, and the remap from the joy_teleop to bypass the link quality check
+  * Add missing newlines to joy teleop config files
+  * Change the link quality check to be exclusive instead of inclusive
+* Contributors: Chris Iverach-Brereton
+
+2.0.2 (2025-01-20)
+------------------
+
+2.0.1 (2025-01-17)
+------------------
+
+2.0.0 (2025-01-16)
+------------------
+* Update diff_drive controller settings (`#137 <https://github.com/clearpathrobotics/clearpath_common/issues/137>`_)
+  * Update diff_drive controller settings
+  * Update all diff_drive settings
+* Improve joy telep support (`#131 <https://github.com/clearpathrobotics/clearpath_common/issues/131>`_)
+  * Update description, add bluez dependency
+  * Add the quality_cutoff parameter to all of the PS4 configuration files
+  * Update the launch file to start the new cutoff node and additional twist_mux
+  * Add udev rules for various controllers
+  * Add dependency on the new bt cutoff package
+  * Add xbox controller parameters for all platforms
+  * Fix the PS4/5 axis ordering; the left stick shows up as axis 3/4, with the l/r analogue triggers being 2 & 5. Update omni control configurations accordingly
+  * Add PS5 udev rules, config files
+  * Add a timeout to the quality lock so we lock out the controller if the quality-checker node crashes
+  * Set the respawn flag for the BT cutoff node and the joy_linux node
+  * Add additional logging when blocking for services & IPC. Since we've added a timeout to the lock, publish fake quality data when using wired controllers. Log when this happens
+* Add `enable_ekf` launch parameter to platform -> localization launch files. Disable the EKF node if enable_ekf is false. (`#133 <https://github.com/clearpathrobotics/clearpath_common/issues/133>`_)
+* Fix sensor depends (`#129 <https://github.com/clearpathrobotics/clearpath_common/issues/129>`_)
   * Remove the package initializations that depend on robot packages
   * Add a copy of the imu_filter parameters from clearpath_sensors to clearpath_control. Change the default IMU filter config path to point to this file. Remove more unneeded initializations of clearpath_robot packages
-  Co-authored-by: Chris Iverach-Brereton <59611394+civerachb-cpr@users.noreply.github.com>
-* Contributors: Luis Camero
-
-1.1.1 (2025-01-16)
-------------------
-
-1.1.0 (2025-01-15)
-------------------
-* Add `enable_ekf` launch parameter to platform -> localization launch files. Disable the EKF node if enable_ekf is false. (`#133 <https://github.com/clearpathrobotics/clearpath_common/issues/133>`_) (`#134 <https://github.com/clearpathrobotics/clearpath_common/issues/134>`_)
-* Contributors: Chris Iverach-Brereton
+* A300 VCAN (`#130 <https://github.com/clearpathrobotics/clearpath_common/issues/130>`_)
+  * A300 vcan1
+  * Set vcan0 to be default can interface for lynx control
+  * Fix to prevent including the same package multiple times
+  * Added filename argument to LaunchFile
+  * Linting
+* A300 (`#118 <https://github.com/clearpathrobotics/clearpath_common/issues/118>`_)
+  * Add A300 meshes
+  * Move A300 meshes
+  * Add A300 URDF
+  * Added A300 control configuration files
+  * Remove unstamped parameter, deprecated
+  * Use clearpath_hardware_interface LynxHardware
+* Fix controller names and kinematics (`#109 <https://github.com/clearpathrobotics/clearpath_common/issues/109>`_)
+* Update simulation support for Jazzy (`#117 <https://github.com/clearpathrobotics/clearpath_common/issues/117>`_)
+  * Rename gazebo plugins to use new gz nomenclature instead of ign/ignition. Use stamped velocity messages.
+  * Restructure the twist_mux yaml file to be more legible, remove the parameters that are overwritten by the launch file anyway
+  * Put use_stamped back just for the sake of being explicit. Add use_stamped directly to the launch file
+  * Fix the tests to catch unsupported platforms & accessories
+* Rename ign\_ -> gz\_ for gazebo dependencies, comment-out missing jazzy dependencies (for now)
+* Removed unstamped remappings
+* Set minimum version of teleop_twist_joy to 2.6.1 (the lowest version that supports stamped messages)
+* Pass use_stamped to twist_mux
+* Remap twist_mux output to stamped cmd_vel
+* Pass publish_stamped_twist to joystick teleop node
+* Remap stamped cmd_vel controller topic
+* Contributors: Chris Iverach-Brereton, Christoph Fröhlich, Luis Camero, Roni Kreinin, Tony Baltovski
 
 1.0.0 (2024-11-25)
 ------------------

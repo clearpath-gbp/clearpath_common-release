@@ -81,11 +81,11 @@
             <box size="${base_length} ${base_length} ${base_height}"/>
           </geometry>
         </collision>
-      </link>
-    </xacro:if>
-    <xacro:unless value="${base == 'base'}">
-      <link name="${name}_base_link" />
-    </xacro:unless>
+    </link>
+  </xacro:if>
+  <xacro:unless value="${base == 'base'}">
+    <link name="${name}_base_link" />
+  </xacro:unless>
 
     <!-- Lidar Link -->
     <link name="${name}_link">
