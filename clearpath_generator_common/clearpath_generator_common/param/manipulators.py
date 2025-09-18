@@ -35,7 +35,6 @@ from clearpath_config.clearpath_config import ClearpathConfig
 from clearpath_config.common.utils.dictionary import merge_dict, replace_dict_items
 from clearpath_config.manipulators.types.arms import Franka, UniversalRobots
 from clearpath_config.manipulators.types.grippers import FrankaGripper
-from clearpath_config.manipulators.types.manipulator import BaseManipulator
 from clearpath_generator_common.common import MoveItParamFile, Package, ParamFile
 from clearpath_generator_common.param.writer import ParamWriter
 
@@ -43,29 +42,6 @@ from clearpath_generator_common.param.writer import ParamWriter
 class ManipulatorParam():
     MOVEIT = 'moveit'
     CONTROL = 'control'
-
-    def replace_name(
-            manipulator: BaseManipulator,
-            parameters: dict) -> dict:
-        if (manipulator.MANIPULATOR_MODEL == Franka.MANIPULATOR_MODEL or
-                manipulator.MANIPULATOR_MODEL == FrankaGripper.MANIPULATOR_MODEL):
-            return replace_dict_items(
-                parameters,
-                {r'${name}': f'{manipulator.name}_{manipulator.arm_id}'}
-            )
-        else:
-            return replace_dict_items(
-                parameters,
-                {r'${name}': manipulator.name}
-            )
-
-    def replace_controller_name(
-            manipulator: BaseManipulator,
-            parameters: dict) -> dict:
-        return replace_dict_items(
-            parameters,
-            {r'${controller_name}': manipulator.name}
-        )
 
     class BaseParam():
         CLEARPATH_MANIPULATORS_DESCRIPTION = 'clearpath_manipulators_description'
@@ -104,13 +80,9 @@ class ManipulatorParam():
                 package=self.default_parameter_package,
                 path=self.default_parameter_directory,
             )
-            if self.namespace == '/':
-                namespace = ''
-            else:
-                namespace = self.namespace
             self.param_file = ParamFile(
                 name=self.default_parameter_name,
-                namespace=f'{namespace}/manipulators',
+                namespace=self.namespace + '/manipulators',
                 path=self.param_path
             )
 
@@ -129,8 +101,25 @@ class ManipulatorParam():
                     parameters={}
                 )
                 arm_param_file.read()
-                updated_parameters = arm_param_file.parameters
-                extra_parameters = arm.ros_parameters
+                # Franka Exception. Add Arm ID.
+                if arm.MANIPULATOR_MODEL == Franka.MANIPULATOR_MODEL:
+                    updated_parameters = replace_dict_items(
+                        arm_param_file.parameters,
+                        {r'${name}': f'{arm.name}_{arm.arm_id}'}
+                    )
+                    extra_parameters = replace_dict_items(
+                        arm.ros_parameters,
+                        {r'${name}': f'{arm.name}_{arm.arm_id}'}
+                    )
+                else:
+                    updated_parameters = replace_dict_items(
+                        arm_param_file.parameters,
+                        {r'${name}': arm.name}
+                    )
+                    extra_parameters = replace_dict_items(
+                        arm.ros_parameters,
+                        {r'${name}': arm.name}
+                    )
                 # UR Arm Exception. Update Rate
                 if arm.MANIPULATOR_MODEL == UniversalRobots.MANIPULATOR_MODEL:
                     try:
@@ -146,23 +135,13 @@ class ManipulatorParam():
                     except Exception as e:
                         print(f'Unable to get UniversalRobots {arm.ur_type}_'
                               f'update_rate.yaml parameter file: {e.args[0]}')
-                # Replace {name} in Parameters
-                updated_parameters = ManipulatorParam.replace_name(
-                    arm,
-                    updated_parameters
+                updated_parameters = replace_dict_items(
+                    updated_parameters,
+                    {r'${controller_name}': arm.name}
                 )
-                extra_parameters = ManipulatorParam.replace_name(
-                    arm,
-                    extra_parameters
-                )
-                # Replace {controller_name} in Parameters
-                updated_parameters = ManipulatorParam.replace_controller_name(
-                    arm,
-                    updated_parameters
-                )
-                extra_parameters = ManipulatorParam.replace_controller_name(
-                    arm,
-                    extra_parameters
+                extra_parameters = replace_dict_items(
+                    extra_parameters,
+                    {r'${controller_name}': arm.name}
                 )
                 self.param_file.parameters = merge_dict(
                     updated_parameters, self.param_file.parameters)
@@ -184,28 +163,37 @@ class ManipulatorParam():
                     parameters={}
                 )
                 gripper_param_file.read()
-                updated_parameters = gripper_param_file.parameters
-                extra_parameters = gripper.ros_parameters
-                # Replace {name} in Parameters
-                updated_parameters = ManipulatorParam.replace_name(
-                    gripper,
-                    updated_parameters
+                # Franka Exception. Add Arm ID.
+                if gripper.MANIPULATOR_MODEL == FrankaGripper.MANIPULATOR_MODEL:
+                    updated_parameters = replace_dict_items(
+                        gripper_param_file.parameters,
+                        {r'${name}': f'{gripper.name}_{gripper.arm_id}'}
+                    )
+                    extra_parameters = replace_dict_items(
+                        gripper.ros_parameters,
+                        {r'${name}': f'{gripper.name}_{gripper.arm_id}'}
+                    )
+                else:
+                    updated_parameters = replace_dict_items(
+                        gripper_param_file.parameters,
+                        {r'${name}': gripper.name}
+                    )
+                    extra_parameters = replace_dict_items(
+                        gripper.ros_parameters,
+                        {r'${name}': gripper.name}
+                    )
+                updated_parameters = replace_dict_items(
+                    updated_parameters,
+                    {r'${controller_name}': gripper.name}
                 )
-                extra_parameters = ManipulatorParam.replace_name(
-                    gripper,
-                    extra_parameters
+                extra_parameters = replace_dict_items(
+                    extra_parameters,
+                    {r'${controller_name}': gripper.name}
                 )
-                # Replace {controller_name} in Parameters
-                updated_parameters = ManipulatorParam.replace_controller_name(
-                    gripper,
-                    updated_parameters
-                )
-                extra_parameters = ManipulatorParam.replace_controller_name(
-                    gripper,
-                    extra_parameters
-                )
+
                 self.param_file.parameters = merge_dict(
                     self.param_file.parameters, updated_parameters)
+
                 # Overwrite ros parameters with extra
                 self.param_file.parameters = merge_dict(
                     extra_parameters, self.param_file.parameters)
@@ -222,26 +210,24 @@ class ManipulatorParam():
                     parameters={}
                 )
                 lift_param_file.read()
-                updated_parameters = lift_param_file.parameters
-                extra_parameters = lift.ros_parameters
-                # Replace {name} in Parameters
-                updated_parameters = ManipulatorParam.replace_name(
-                    lift,
-                    updated_parameters
+                updated_parameters = replace_dict_items(
+                    lift_param_file.parameters,
+                    {r'${name}': lift.name}
                 )
-                extra_parameters = ManipulatorParam.replace_name(
-                    lift,
-                    extra_parameters
+                updated_parameters = replace_dict_items(
+                    updated_parameters,
+                    {r'${controller_name}': lift.name}
                 )
-                # Replace {controller_name} in Parameters
-                updated_parameters = ManipulatorParam.replace_controller_name(
-                    lift,
-                    updated_parameters
+
+                extra_parameters = replace_dict_items(
+                    lift.ros_parameters,
+                    {r'${name}': lift.name}
                 )
-                extra_parameters = ManipulatorParam.replace_controller_name(
-                    lift,
-                    extra_parameters
+                extra_parameters = replace_dict_items(
+                    extra_parameters,
+                    {r'${controller_name}': lift.name}
                 )
+
                 self.param_file.parameters = merge_dict(
                     self.param_file.parameters, updated_parameters)
 
@@ -361,14 +347,9 @@ class ManipulatorParam():
                     package=parameter_package
                 )
                 kinematics_file.read()
-                kinematics_file.parameters = ManipulatorParam.replace_name(
-                    arm,
-                    kinematics_file.parameters
-                )
-                kinematics_file.parameters = ManipulatorParam.replace_controller_name(
-                    arm,
-                    kinematics_file.parameters
-                )
+                kinematics_file.replace({
+                    r'${name}': arm.name
+                })
                 parameter_file += kinematics_file
             # Grippers
             for arm in self.clearpath_config.manipulators.get_all_arms():
@@ -381,14 +362,9 @@ class ManipulatorParam():
                     package=parameter_package
                 )
                 kinematics_file.read()
-                kinematics_file.parameters = ManipulatorParam.replace_name(
-                    gripper,
-                    kinematics_file.parameters
-                )
-                kinematics_file.parameters = ManipulatorParam.replace_controller_name(
-                    gripper,
-                    kinematics_file.parameters
-                )
+                kinematics_file.replace({
+                    r'${name}': gripper.name
+                })
                 parameter_file += kinematics_file
             # Lifts
             for lift in self.clearpath_config.manipulators.get_all_lifts():
@@ -398,14 +374,9 @@ class ManipulatorParam():
                     package=parameter_package
                 )
                 kinematics_file.read()
-                kinematics_file.parameters = ManipulatorParam.replace_name(
-                    lift,
-                    kinematics_file.parameters
-                )
-                kinematics_file.parameters = ManipulatorParam.replace_controller_name(
-                    lift,
-                    kinematics_file.parameters
-                )
+                kinematics_file.replace({
+                    r'${name}': lift.name
+                })
                 parameter_file += kinematics_file
             parameter_file.add_header('robot_description_kinematics')
             return parameter_file
@@ -449,13 +420,16 @@ class ManipulatorParam():
                 if not use_sim_time:
                     controller_name = 'manipulators/' + controller_name
                 controller_file.read()
-                controller_file.parameters = ManipulatorParam.replace_name(
-                    arm,
-                    controller_file.parameters
-                )
-                controller_file.replace({
-                    r'${controller_name}': controller_name,
-                })
+                if arm.MANIPULATOR_MODEL == Franka.MANIPULATOR_MODEL:
+                    controller_file.replace({
+                        r'${controller_name}': controller_name,
+                        r'${name}': f'{arm.name}_{arm.arm_id}'
+                    })
+                else:
+                    controller_file.replace({
+                        r'${controller_name}': controller_name,
+                        r'${name}': arm.name
+                    })
                 parameter_file += controller_file
             # Grippers
             for arm in self.clearpath_config.manipulators.get_all_arms():
@@ -475,13 +449,16 @@ class ManipulatorParam():
                 if not use_sim_time:
                     controller_name = 'manipulators/' + controller_name
                 controller_file.read()
-                controller_file.parameters = ManipulatorParam.replace_name(
-                    gripper,
-                    controller_file.parameters
-                )
-                controller_file.replace({
-                    r'${controller_name}': controller_name,
-                })
+                if gripper.MANIPULATOR_MODEL == FrankaGripper.MANIPULATOR_MODEL:
+                    controller_file.replace({
+                        r'${controller_name}': controller_name,
+                        r'${name}': f'{gripper.name}_{gripper.arm_id}'
+                    })
+                else:
+                    controller_file.replace({
+                        r'${controller_name}': controller_name,
+                        r'${name}': gripper.name
+                    })
                 parameter_file += controller_file
             # Lifts
             for lift in self.clearpath_config.manipulators.get_all_lifts():
@@ -498,12 +475,9 @@ class ManipulatorParam():
                 if not use_sim_time:
                     controller_name = 'manipulators/' + controller_name
                 controller_file.read()
-                controller_file.parameters = ManipulatorParam.replace_name(
-                    lift,
-                    controller_file.parameters
-                )
                 controller_file.replace({
                     r'${controller_name}': controller_name,
+                    r'${name}': lift.name
                 })
                 parameter_file += controller_file
             return parameter_file
@@ -520,7 +494,7 @@ class ManipulatorParam():
             )
             # Arms
             for arm in self.clearpath_config.manipulators.get_all_arms():
-                joint_limits_file = MoveItParamFile(
+                controller_file = MoveItParamFile(
                     name=parameter_name,
                     path=os.path.join(
                         parameter_directory,
@@ -529,22 +503,17 @@ class ManipulatorParam():
                     ),
                     package=parameter_package
                 )
-                joint_limits_file.read()
-                joint_limits_file.parameters = ManipulatorParam.replace_name(
-                    arm,
-                    joint_limits_file.parameters
-                )
-                joint_limits_file.parameters = ManipulatorParam.replace_controller_name(
-                    arm,
-                    joint_limits_file.parameters
-                )
-                parameter_file += joint_limits_file
+                controller_file.read()
+                controller_file.replace({
+                    r'${name}': arm.name
+                })
+                parameter_file += controller_file
             # Grippers
             for arm in self.clearpath_config.manipulators.get_all_arms():
                 if not arm.gripper:
                     continue
                 gripper = arm.gripper
-                joint_limits_file = MoveItParamFile(
+                controller_file = MoveItParamFile(
                     name=parameter_name,
                     path=os.path.join(
                         parameter_directory,
@@ -553,19 +522,14 @@ class ManipulatorParam():
                     ),
                     package=parameter_package
                 )
-                joint_limits_file.read()
-                joint_limits_file.parameters = ManipulatorParam.replace_name(
-                    gripper,
-                    joint_limits_file.parameters
-                )
-                joint_limits_file.parameters = ManipulatorParam.replace_controller_name(
-                    gripper,
-                    joint_limits_file.parameters
-                )
-                parameter_file += joint_limits_file
+                controller_file.read()
+                controller_file.replace({
+                    r'${name}': gripper.name
+                })
+                parameter_file += controller_file
             # Lifts
             for lift in self.clearpath_config.manipulators.get_all_lifts():
-                joint_limits_file = MoveItParamFile(
+                controller_file = MoveItParamFile(
                     name=parameter_name,
                     path=os.path.join(
                         parameter_directory,
@@ -574,16 +538,11 @@ class ManipulatorParam():
                     ),
                     package=parameter_package
                 )
-                joint_limits_file.read()
-                joint_limits_file.parameters = ManipulatorParam.replace_name(
-                    lift,
-                    joint_limits_file.parameters
-                )
-                joint_limits_file.parameters = ManipulatorParam.replace_controller_name(
-                    lift,
-                    joint_limits_file.parameters
-                )
-                parameter_file += joint_limits_file
+                controller_file.read()
+                controller_file.replace({
+                    r'${name}': lift.name
+                })
+                parameter_file += controller_file
             parameter_file.add_header('robot_description_planning')
             return parameter_file
 
