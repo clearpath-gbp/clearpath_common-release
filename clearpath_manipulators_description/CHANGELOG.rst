@@ -2,6 +2,9 @@
 Changelog for package clearpath_manipulators_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.8.0 (2025-10-23)
+------------------
+
 2.7.4 (2025-09-18)
 ------------------
 * Feature: Kinova Jazzy Support (`#265 <https://github.com/clearpathrobotics/clearpath_common/issues/265>`_)
