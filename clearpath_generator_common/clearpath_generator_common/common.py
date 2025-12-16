@@ -25,7 +25,7 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-import argparse
+import getopt
 import os
 import sys
 
@@ -105,47 +105,6 @@ class LaunchFile():
             self.arguments = arguments
             self.remappings = remappings
 
-    class ComposableNode(LaunchComponent):
-
-        def __init__(self,
-                     name: str,
-                     package: Package,
-                     plugin: str,
-                     namespace: str = '',
-                     parameters: List[dict] | List[str] = [],
-                     extra_arguments: List[list] | List[str] = [],
-                     remappings: List[tuple] = []) -> None:
-            super().__init__(name)
-            self.declaration = 'node_' + self.name
-            self.package = package
-            self.plugin = plugin
-            self.namespace = namespace
-            self.parameters = parameters
-            self.extra_arguments = extra_arguments
-            self.remappings = remappings
-
-    class ComposableNodeContainer(Node):
-
-        def __init__(self,
-                     name: str,
-                     executable: str = 'component_container',
-                     package: Package = 'rclcpp_components',
-                     namespace: str = '',
-                     parameters: List[dict] | List[str] = [],
-                     arguments: List[list] | List[str] = [],
-                     remappings: List[tuple] = [],
-                     composable_node_descriptions: List = []) -> None:
-            super().__init__(
-                name,
-                package,
-                executable,
-                namespace,
-                parameters,
-                arguments,
-                remappings,
-            )
-            self.composable_node_descriptions = composable_node_descriptions
-
     @staticmethod
     def get_static_tf_node(name: str,
                            namespace: str,
@@ -172,17 +131,13 @@ class LaunchFile():
                  name: str,
                  path: str = 'launch',
                  package: Package = None,
-                 args: List[tuple] = None,
-                 filename: str = None,
+                 args: List[tuple] = None
                  ) -> None:
         self.package = package
         self.path = path
         self.name = 'launch_' + name
         self.declaration = 'launch_file_{0}'.format(name)
-        if filename:
-            self.file = '{0}.launch.py'.format(filename)
-        else:
-            self.file = '{0}.launch.py'.format(name)
+        self.file = '{0}.launch.py'.format(name)
         self.args = args
 
     def get_full_path(self):
@@ -295,18 +250,10 @@ class MoveItParamFile(ParamFile):
 
 
 class BashFile():
-    """
-    A bash file we can source.
-
-    :param filename: The name of the file or the absolute path to the file
-    :param path: The absolute or relative directory containing the file if filename
-        is not a complete path. package must be specified if path is not absolute
-    :param package: The ROS package that contains path if it is not absolute
-    """
 
     def __init__(self,
                  filename: str,
-                 path: str = None,
+                 path: str,
                  package: Package = None,
                  ) -> None:
         self.package = package
@@ -318,16 +265,13 @@ class BashFile():
         if self.package:
             return os.path.join(
                 get_package_share_directory(self.package.name), self.path, self.file)
-        elif self.path:
-            return os.path.join(self.path, self.file)
         else:
-            return self.file
+            return os.path.join(self.path, self.file)
 
 
 class BaseGenerator():
     SENSORS_PATH = 'sensors/'
     PLATFORM_PATH = 'platform/'
-    PLATFORM_EXTRAS_PATH = 'platform-extras/'
     MANIPULATORS_PATH = 'manipulators/'
     LAUNCH_PATH = 'launch/'
     PARAM_PATH = 'config/'
@@ -336,8 +280,7 @@ class BaseGenerator():
                  setup_path: str = '/etc/clearpath/') -> None:
         # Define paths
         self.config_path = os.path.join(setup_path, 'robot.yaml')
-        if not os.path.exists(self.config_path):
-            raise FileNotFoundError(f'Config path {self.config_path} does not exist')
+        assert os.path.exists(self.config_path)
 
         self.setup_path = setup_path
         self.sensors_params_path = os.path.join(
@@ -348,8 +291,6 @@ class BaseGenerator():
             self.setup_path, self.PLATFORM_PATH, self.PARAM_PATH)
         self.platform_launch_path = os.path.join(
             self.setup_path, self.PLATFORM_PATH, self.LAUNCH_PATH)
-        self.platform_extras_launch_path = os.path.join(
-            self.setup_path, self.PLATFORM_EXTRAS_PATH, self.LAUNCH_PATH)
         self.manipulators_params_path = os.path.join(
             self.setup_path, self.MANIPULATORS_PATH, self.PARAM_PATH)
         self.manipulators_launch_path = os.path.join(
@@ -384,16 +325,17 @@ class BaseGenerator():
             last_arg_index = len(sys.argv)
         argv = sys.argv[1:last_arg_index]
 
-        parser = argparse.ArgumentParser()
-        parser.add_argument(
-            '-s',
-            '--setup_path',
-            type=str,
-            action='store',
-            dest='setup_path',
-            default='/etc/clearpath',
-            help='Setup path, i.e. the directory containing robot.yaml. Default: /etc/clearpath',
-        )
+        try:
+            options, args = getopt.getopt(argv, 's:', ['setup_path='])
+        except getopt.GetoptError as err:
+            print(err)
 
-        args = parser.parse_args(argv)
-        return args.setup_path
+        setup_path = '/etc/clearpath/'
+
+        for option, value in options:
+            if option in ('-s', '--setup_path'):
+                setup_path = value
+            else:
+                pass
+
+        return setup_path
