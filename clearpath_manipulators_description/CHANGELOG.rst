@@ -2,6 +2,9 @@
 Changelog for package clearpath_manipulators_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.8 (2025-12-16)
+------------------
+
 1.3.7 (2025-09-18)
 ------------------
 * Fix: Lift URDF Parameters (`#267 <https://github.com/clearpathrobotics/clearpath_common/issues/267>`_)
