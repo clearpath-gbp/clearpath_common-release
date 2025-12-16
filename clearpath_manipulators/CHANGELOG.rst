@@ -2,44 +2,117 @@
 Changelog for package clearpath_manipulators
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.8 (2025-12-16)
+2.8.3 (2025-12-16)
 ------------------
 
-1.3.7 (2025-09-18)
+2.8.2 (2025-11-06)
 ------------------
 
-1.3.6 (2025-08-26)
+2.8.1 (2025-10-28)
 ------------------
 
-1.3.5 (2025-07-29)
+2.8.0 (2025-10-23)
 ------------------
 
-1.3.4 (2025-07-17)
+2.7.4 (2025-09-18)
 ------------------
 
-1.3.3 (2025-07-03)
+2.7.3 (2025-09-16)
 ------------------
 
-1.3.2 (2025-04-15)
+2.7.2 (2025-09-08)
 ------------------
 
-1.3.1 (2025-04-15)
+2.7.1 (2025-09-08)
 ------------------
-
-1.3.0 (2025-04-15)
-------------------
-* Feature: Add delay to manipulator controller (`#182 <https://github.com/clearpathrobotics/clearpath_common/issues/182>`_)
-* Contributors: Luis Camero
-
-1.2.0 (2025-03-13)
-------------------
-* Feature: MoveIt Parameters and Enable (`#166 <https://github.com/clearpathrobotics/clearpath_common/issues/166>`_)
+* Feature: Franka in Jazzy (`#255 <https://github.com/clearpathrobotics/clearpath_common/issues/255>`_)
+  * Forward from Humble: Feature Franka
+  * Initial franka addition
+  * Create joint instead of using connected_to parameter
+  * Custom entry for generating Franka param
+  * Franka control for multiple types
+  * Modify entire Franka arm xacro
+  * Add franka gripper
+  * Copy and modify franka description
+  * Add cutout for Franka arm_id
+  * Add dependency for franka_description
+  * Fix: Franka Update (`#238 <https://github.com/clearpathrobotics/clearpath_common/issues/238>`_)
+  * Pass version parameter to Franka Hardware Interface
+  * Use franka_arm macro and always add position and velocity interfaces
+  * Only use effort
+  * Feature: Franka Hand (`#244 <https://github.com/clearpathrobotics/clearpath_common/issues/244>`_)
+  * Remove ros2_control controllers
+  * Move gazebo control to a separate file
+  * Pass arm_id to Franka SRDF
+  * Pass poses from config with arm_id on Franka
+  * Common method to replace placeholders in parameter files
+  * Use appropriate placeholders in parameters
+  * Replace controller_name placeholders at all points
+  * Lint
 * Contributors: luis-camero
 
-1.1.1 (2025-01-16)
+2.7.0 (2025-08-25)
 ------------------
 
-1.1.0 (2025-01-15)
+2.6.4 (2025-07-29)
+------------------
+
+2.6.3 (2025-07-18)
+------------------
+
+2.6.2 (2025-07-14)
+------------------
+
+2.6.1 (2025-07-07)
+------------------
+
+2.6.0 (2025-07-04)
+------------------
+
+2.5.1 (2025-06-17)
+------------------
+
+2.5.0 (2025-05-29)
+------------------
+
+2.3.2 (2025-04-30)
+------------------
+* Add srdf plugins to package xml (`#204 <https://github.com/clearpathrobotics/clearpath_common/issues/204>`_)
+* Contributors: Luis Camero
+
+2.3.1 (2025-04-16)
+------------------
+
+2.3.0 (2025-04-11)
+------------------
+* Added delay to manipulator controller (`#191 <https://github.com/clearpathrobotics/clearpath_common/issues/191>`_)
+* Added MoveIt Parameters and Enable (`#166 <https://github.com/clearpathrobotics/clearpath_common/issues/166>`_) (`#189 <https://github.com/clearpathrobotics/clearpath_common/issues/189>`_)
+* Contributors: Luis Camero
+
+2.2.2 (2025-04-09)
+------------------
+
+2.2.1 (2025-04-07)
+------------------
+* Fix: Rename ompl to _ompl and update to match Jazzy (`#186 <https://github.com/clearpathrobotics/clearpath_common/issues/186>`_)
+* Contributors: Luis Camero
+
+2.2.0 (2025-03-11)
+------------------
+
+2.1.0 (2025-01-31)
+------------------
+
+2.0.3 (2025-01-21)
+------------------
+
+2.0.2 (2025-01-20)
+------------------
+
+2.0.1 (2025-01-17)
+------------------
+
+2.0.0 (2025-01-16)
 ------------------
 
 1.0.0 (2024-11-25)
