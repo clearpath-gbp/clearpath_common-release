@@ -2,6 +2,17 @@
 Changelog for package clearpath_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.8.3 (2025-12-16)
+------------------
+* Fix: Generic (`#280 <https://github.com/clearpathrobotics/clearpath_common/issues/280>`_)
+  * Check for generic before creating drivetrain parameters
+  * Add teleop_joy default parameter file for generic robot
+  * Generic teleop values
+  * Generic control file without a controller
+  * Generic empty robot
+  * Update path to cvontrol in empty generic URDF
+* Contributors: luis-camero
+
 2.8.2 (2025-11-06)
 ------------------
 
