@@ -2,6 +2,9 @@
 Changelog for package clearpath_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.8.4 (2025-12-22)
+------------------
+
 2.8.3 (2025-12-16)
 ------------------
 * Fix: Generic (`#280 <https://github.com/clearpathrobotics/clearpath_common/issues/280>`_)
