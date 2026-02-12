@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.20)
 project(clearpath_generator_common)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -17,6 +17,7 @@ install(PROGRAMS
   ${PROJECT_NAME}/bash/generate_bash
   ${PROJECT_NAME}/semantic_description/generate_semantic_description
   ${PROJECT_NAME}/vcan/generate_vcan
+  ${PROJECT_NAME}/zenoh_router/generate_zenoh_router
   DESTINATION lib/${PROJECT_NAME}
 )
 

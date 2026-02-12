@@ -2,57 +2,209 @@
 Changelog for package clearpath_platform_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.9 (2026-01-30)
+2.9.1 (2026-02-11)
 ------------------
 
-1.3.8 (2025-12-16)
+2.9.0 (2026-02-11)
 ------------------
-
-1.3.7 (2025-09-18)
-------------------
-
-1.3.6 (2025-08-26)
-------------------
-
-1.3.5 (2025-07-29)
-------------------
-
-1.3.4 (2025-07-17)
-------------------
-
-1.3.3 (2025-07-03)
-------------------
-
-1.3.2 (2025-04-15)
-------------------
-
-1.3.1 (2025-04-15)
-------------------
-
-1.3.0 (2025-04-15)
-------------------
-
-1.2.0 (2025-03-13)
-------------------
-* Feature: Link Material (`#162 <https://github.com/clearpathrobotics/clearpath_common/issues/162>`_)
-  * Add material to link generator
-  * Add material xacro macro
-  * Catch exception for frame without material
+* Fix: Update cmake version to 3.20 and fixed CI (`#295 <https://github.com/clearpathrobotics/clearpath_common/issues/295>`_)
+  * Update cmake version to 3.20
+  * Switch to ubuntu:noble container
+  * Use updated repos update action
+  * Install python and pip
+  * Add apt update
+  * Update repos update action version
 * Contributors: luis-camero
 
-1.1.1 (2025-01-16)
+2.8.5 (2026-01-30)
 ------------------
-* [clearpath_platform_description] Fixed R100 rear cover colour. (`#145 <https://github.com/clearpathrobotics/clearpath_common/issues/145>`_)
+
+2.8.4 (2025-12-22)
+------------------
+
+2.8.3 (2025-12-16)
+------------------
+* Add missing Gazebo IMU topic tags for omnidirectional platforms (`#286 <https://github.com/clearpathrobotics/clearpath_common/issues/286>`_)
+  * Add missing Gazebo IMU topic tags for omnidirectional platforms
+  Fixes missing <topic> tag in IMU sensor definitions for R100, DO100,
+  and DO150 platforms. Without this tag, Gazebo publishes IMU data on
+  default topic names instead of the namespace-aware topics expected by
+  ros_gz_bridge, causing IMU data to not reach ROS 2 in simulation.
+  This issue only affected omnidirectional platforms (mecanum wheel
+  configurations). Differential drive platforms (J100, W200, DD100, DD150)
+  were already fixed in v0.2.10.
+  Tested on R100 platform with Gazebo Harmonic and ROS 2 Jazzy.
+  IMU data now successfully bridges to /r100_0000/sensors/imu_0/data_raw
+  and is consumed by ekf_localization_node for sensor fusion.
+  * Fixed indent.
+  ---------
+  Co-authored-by: Michael Wescott <Michael.E.Wescott@Spiritaero.com>
+* Replaced ignition references with gz (`#283 <https://github.com/clearpathrobotics/clearpath_common/issues/283>`_)
+* Fix: Generic (`#280 <https://github.com/clearpathrobotics/clearpath_common/issues/280>`_)
+  * Check for generic before creating drivetrain parameters
+  * Add teleop_joy default parameter file for generic robot
+  * Generic teleop values
+  * Generic control file without a controller
+  * Generic empty robot
+  * Update path to cvontrol in empty generic URDF
+* Contributors: Roni Kreinin, Tony Baltovski, luis-camero
+
+2.8.2 (2025-11-06)
+------------------
+
+2.8.1 (2025-10-28)
+------------------
+* Add guard to include zed only once
+* Contributors: Luis Camero
+
+2.8.0 (2025-10-23)
+------------------
+
+2.7.4 (2025-09-18)
+------------------
+
+2.7.3 (2025-09-16)
+------------------
+
+2.7.2 (2025-09-08)
+------------------
+* Fix: Use Platform Controllers (`#257 <https://github.com/clearpathrobotics/clearpath_common/issues/257>`_)
+  Add ros2_control only when use_platform_controllers is true
+* Contributors: luis-camero
+
+2.7.1 (2025-09-08)
+------------------
+* Fix: Ridgeback rear lights and cover colors (`#254 <https://github.com/clearpathrobotics/clearpath_common/issues/254>`_)
+* Contributors: SyZbidi
+
+2.7.0 (2025-08-25)
+------------------
+* Drivetrains (`#237 <https://github.com/clearpathrobotics/clearpath_common/issues/237>`_)
+  * Moved meshes to wheels folder
+  Mecanum drivetrain for do100
+  * Generic drivetrain URDFs
+  * Pass hardware plugin string rather than block
+  * Added drivetrain control parameters
+  * Removed 2WD for Dingo-O
+  * DO150
+  * Dingo-D
+  * R100
+  * A300 urdf
+  * Fixed xacro generate print
+  * Generic teleop configs per controller
+  Platform specific teleop only defines velocity limits
+  * A200 drivetrain changes
+  * W200 drivetrain urdf
+  * Updated A300 meshes
+  Mecanum and caster support
+  * Separated caster wheel into swivel and wheel links
+  * Fixed joystick axis mapping
+  * Updated wheel_separation_multiplier for fwd and rwd on A300
+  * URDF structure changes for J100
+  Updated A200 and W200 to be 4WD
+  * Linting
+* Add the mounting link for the charger's 2D lidar (`#241 <https://github.com/clearpathrobotics/clearpath_common/issues/241>`_)
+* Contributors: Chris Iverach-Brereton, Roni Kreinin
+
+2.6.4 (2025-07-29)
+------------------
+
+2.6.3 (2025-07-18)
+------------------
+* Fix: Disable Platform Controllers in Manipulator Controllers (`#239 <https://github.com/clearpathrobotics/clearpath_common/issues/239>`_)
+  Add flag to disable platform controllers for manipulation controller manager
+* Contributors: luis-camero
+
+2.6.2 (2025-07-14)
+------------------
+
+2.6.1 (2025-07-07)
+------------------
+
+2.6.0 (2025-07-04)
+------------------
+* Add the third antenna (bluetooth) to the top of the AMP frame (`#231 <https://github.com/clearpathrobotics/clearpath_common/issues/231>`_)
+* Add A300 AMP attachments (`#200 <https://github.com/clearpathrobotics/clearpath_common/issues/200>`_)
+  * Add meshes, URDFs for the A300 AMP and AMP Observer attachments
+  * Add spotlight attachment with light plugin for simulation
+  * Add Seyond description with lower-than-reality resolution & correct FoV for simulation. Fix math for calculating the number of samples
+  * Add GPS plugins for the Fixposition description
+* Contributors: Chris Iverach-Brereton
+
+2.5.1 (2025-06-17)
+------------------
+
+2.5.0 (2025-05-29)
+------------------
+* Fix: PACS Limits (`#215 <https://github.com/clearpathrobotics/clearpath_common/issues/215>`_)
+* Contributors: luis-camero
+
+2.3.2 (2025-04-30)
+------------------
+
+2.3.1 (2025-04-16)
+------------------
+* [clearpath_platform_description] Updated Ridgeback R100 raiser height to 0.07m from 0.055m. (`#201 <https://github.com/clearpathrobotics/clearpath_common/issues/201>`_)
 * Contributors: Tony Baltovski
 
-1.1.0 (2025-01-15)
+2.3.0 (2025-04-11)
 ------------------
-* Fix color of rear lights
-* Add flag to disable platform controllers for manipulation controller manager
+
+2.2.2 (2025-04-09)
+------------------
+
+2.2.1 (2025-04-07)
+------------------
+
+2.2.0 (2025-03-11)
+------------------
+
+2.1.0 (2025-01-31)
+------------------
+
+2.0.3 (2025-01-21)
+------------------
+
+2.0.2 (2025-01-20)
+------------------
+
+2.0.1 (2025-01-17)
+------------------
+
+2.0.0 (2025-01-16)
+------------------
+* Add the A200 Observer backpack attachment (`#122 <https://github.com/clearpathrobotics/clearpath_common/issues/122>`_)
+  * Add the A200 Observer backpack attachment
 * [clearpath_platform_description] Fixed Ridgeback R100 rear light colour. (`#127 <https://github.com/clearpathrobotics/clearpath_common/issues/127>`_)
-* Add flag to disable platform controllers for manipulation controller manager
-* [clearpath_platform_description] Fixed Ridgeback R100 rear light colour. (`#127 <https://github.com/clearpathrobotics/clearpath_common/issues/127>`_)
-* Contributors: Luis Camero, Tony Baltovski
+* Add PTZ sim support (`#125 <https://github.com/clearpathrobotics/clearpath_common/issues/125>`_)
+  * Now that axis_camera is released via OSRF, depend on the official package, remove duplicate meshes
+  * Rename Gazebo plugins for Jazzy compatibility
+  * Modify Axis camera URDFs to using the axis_camera meshes. This lets us control the gazebo topics. Fix the GZ topic names. Camera data is now visible in the simulation
+  * Add joint controllers for the pan & tilt actuators. This provides velocity control over the simulated camera
+* Add a placeholer URDF for the AMP mount, update meshes (`#123 <https://github.com/clearpathrobotics/clearpath_common/issues/123>`_)
+  * Add a placeholer URDF for the AMP mount; STL & final dimensions to come at a later date
+  * Default to treaded wheels, flip all the wheel models so the treads visually go in the correct direction
+  * Update the top plate, chassis, livery, smooth wheel, and status light meshes. Closes CPE87-2102
+  * Catch unsupported platforms/accessories in vcan generation tests
+* A300 (`#118 <https://github.com/clearpathrobotics/clearpath_common/issues/118>`_)
+  * Add A300 meshes
+  * Move A300 meshes
+  * Add A300 URDF
+  * Added A300 control configuration files
+  * Remove unstamped parameter, deprecated
+  * Use clearpath_hardware_interface LynxHardware
+  ---------
+  Co-authored-by: Luis Camero <lcamero@clearpathrobotics.com>
+* Add collision tags for MoveIt to avoid these objects (`#108 <https://github.com/clearpathrobotics/clearpath_common/issues/108>`_)
+* Remove all references to clearpath_platform
+* Add collision tags for MoveIt to avoid these objects (`#108 <https://github.com/clearpathrobotics/clearpath_common/issues/108>`_)
+* Update simulation support for Jazzy (`#117 <https://github.com/clearpathrobotics/clearpath_common/issues/117>`_)
+  * Rename gazebo plugins to use new gz nomenclature instead of ign/ignition. Use stamped velocity messages.
+  * Restructure the twist_mux yaml file to be more legible, remove the parameters that are overwritten by the launch file anyway
+  * Put use_stamped back just for the sake of being explicit. Add use_stamped directly to the launch file
+  * Fix the tests to catch unsupported platforms & accessories
+* Rename ign\_ -> gz\_ for gazebo dependencies, comment-out missing jazzy dependencies (for now)
+* Contributors: Chris Iverach-Brereton, Luis Camero, Roni Kreinin, Tony Baltovski, luis-camero
 
 1.0.0 (2024-11-25)
 ------------------
