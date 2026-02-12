@@ -2,6 +2,30 @@
 Changelog for package clearpath_generator_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.1 (2026-02-11)
+------------------
+* Bumped required clearpath_config dep.
+* Contributors: Tony Baltovski
+
+2.9.0 (2026-02-11)
+------------------
+* Proton Diagnostics (`#301 <https://github.com/clearpathrobotics/clearpath_common/issues/301>`_)
+  * Updated j100 acceleration parameters
+  * Proton firmware version checks
+  * Add proton path to aggregator
+  * Initialise version string in constructor
+  * Updated mcu firmware version logic
+  * Linting
+  * More linting
+* Fix: Update cmake version to 3.20 and fixed CI (`#295 <https://github.com/clearpathrobotics/clearpath_common/issues/295>`_)
+  * Update cmake version to 3.20
+  * Switch to ubuntu:noble container
+  * Use updated repos update action
+  * Install python and pip
+  * Add apt update
+  * Update repos update action version
+* Contributors: Roni Kreinin, luis-camero
+
 2.8.5 (2026-01-30)
 ------------------
 
