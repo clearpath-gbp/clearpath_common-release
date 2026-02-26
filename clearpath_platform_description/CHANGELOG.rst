@@ -2,6 +2,11 @@
 Changelog for package clearpath_platform_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.3 (2026-02-26)
+------------------
+* Added use_platform_controllers for R100. (`#313 <https://github.com/clearpathrobotics/clearpath_common/issues/313>`_)
+* Contributors: Tony Baltovski
+
 2.9.2 (2026-02-26)
 ------------------
 
