@@ -2,6 +2,9 @@
 Changelog for package clearpath_generator_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.3 (2026-02-26)
+------------------
+
 2.9.2 (2026-02-26)
 ------------------
 * Fix: Robotiq 2F 140 Limits and Padding (`#311 <https://github.com/clearpathrobotics/clearpath_common/issues/311>`_)
