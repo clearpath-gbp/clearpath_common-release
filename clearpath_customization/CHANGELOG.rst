@@ -2,6 +2,9 @@
 Changelog for package clearpath_customization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.2 (2026-02-26)
+------------------
+
 2.9.1 (2026-02-11)
 ------------------
 * Bumped required clearpath_config dep.
