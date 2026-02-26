@@ -16,11 +16,18 @@
     sim_isaac:=false
     isaac_joint_commands:=/isaac_joint_commands
     isaac_joint_states:=/isaac_joint_states
-    com_port:=/dev/ttyUSB0">
+    com_port:=/dev/ttyUSB0
+    padding:=true">
 
     <!-- Variables Mappings -->
     <xacro:property name="prefix" value="${name}_"/>
     <xacro:property name="stroke" value="140"/>
+    <xacro:if value="${padding}">
+      <xacro:property name="upper_finger_joint_limit" value="0.7"/>
+    </xacro:if>
+    <xacro:unless value="${padding}">
+      <xacro:property name="upper_finger_joint_limit" value="0.767"/>
+    </xacro:unless>
 
     <!-- this is a temporary link to rotate the 2f-140 gripper to match the 2f-85 -->
     <link name="${prefix}robotiq_base_link"/>
@@ -39,7 +46,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_140_base_link.stl" />
+          <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_140_base_link.stl" />
         </geometry>
         <material name="">
           <color rgba="0.1 0.1 0.1 1" />
@@ -48,7 +55,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_140_base_link_collision.stl" />
+          <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_140_base_link_collision.stl" />
         </geometry>
       </collision>
     </link>
@@ -75,7 +82,7 @@
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_outer_knuckle.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_outer_knuckle.stl" />
           </geometry>
           <material name="">
             <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
@@ -84,7 +91,7 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_outer_knuckle_collision.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_outer_knuckle_collision.stl" />
           </geometry>
         </collision>
       </link>
@@ -106,7 +113,7 @@
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_outer_finger.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_outer_finger.stl" />
           </geometry>
           <material name="">
             <color rgba="0.1 0.1 0.1 1" />
@@ -115,7 +122,7 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_outer_finger_collision.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_outer_finger_collision.stl" />
           </geometry>
         </collision>
       </link>
@@ -137,7 +144,7 @@
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_inner_knuckle.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_inner_knuckle.stl" />
           </geometry>
           <material name="">
             <color rgba="0.1 0.1 0.1 1" />
@@ -146,7 +153,7 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_inner_knuckle_collision.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_inner_knuckle_collision.stl" />
           </geometry>
         </collision>
       </link>
@@ -168,7 +175,7 @@
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_inner_finger.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_inner_finger.stl" />
           </geometry>
           <material name="">
             <color rgba="0.1 0.1 0.1 1" />
@@ -177,7 +184,7 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find clearpath_manipulators_description)/meshes/gripper/robotiq_2f_${stroke}_inner_finger_collision.stl" />
+            <mesh filename="package://clearpath_manipulators_description/meshes/gripper/robotiq_2f_${stroke}_inner_finger_collision.stl" />
           </geometry>
         </collision>
       </link>
@@ -213,7 +220,7 @@
         <parent link="${prefix}robotiq_140_base_link" />
         <child link="${prefix}left_outer_knuckle" />
         <axis xyz="-1 0 0" />
-        <limit lower="0" upper="0.7" velocity="2.0" effort="1000" />
+        <limit lower="0" upper="${upper_finger_joint_limit}" velocity="2.0" effort="1000" />
       </joint>
       <xacro:finger_joints prefix="${prefix}" fingerprefix="left" reflect="1.0"/>
     </xacro:macro>
@@ -224,7 +231,7 @@
         <parent link="${prefix}robotiq_140_base_link" />
         <child link="${prefix}right_outer_knuckle" />
         <axis xyz="1 0 0" />
-        <limit lower="-0.725" upper="0.725" velocity="2.0" effort="1000" />
+        <limit lower="-0.775" upper="0.775" velocity="2.0" effort="1000" />
         <mimic joint="${prefix}finger_joint" multiplier="-1" offset="0" />
       </joint>
       <xacro:finger_joints prefix="${prefix}" fingerprefix="right" reflect="-1.0"/>
@@ -274,14 +281,18 @@
       <xacro:outer_finger_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
       <xacro:inner_knuckle_joint prefix="${prefix}" fingerprefix="${fingerprefix}" reflect="${reflect}"/>
       <xacro:inner_finger_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
-      <xacro:inner_finger_pad_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
+      <xacro:if value="${padding}">
+        <xacro:inner_finger_pad_joint prefix="${prefix}" fingerprefix="${fingerprefix}"/>
+      </xacro:if>
     </xacro:macro>
 
     <xacro:macro name="finger_links" params="prefix fingerprefix stroke">
       <xacro:outer_knuckle prefix="${prefix}" fingerprefix="${fingerprefix}" stroke="${stroke}"/>
       <xacro:outer_finger prefix="${prefix}" fingerprefix="${fingerprefix}" stroke="${stroke}"/>
       <xacro:inner_finger prefix="${prefix}" fingerprefix="${fingerprefix}" stroke="${stroke}"/>
-      <xacro:inner_finger_pad prefix="${prefix}" fingerprefix="${fingerprefix}"/>
+      <xacro:if value="${padding}">
+        <xacro:inner_finger_pad prefix="${prefix}" fingerprefix="${fingerprefix}"/>
+      </xacro:if>
       <xacro:inner_knuckle prefix="${prefix}" fingerprefix="${fingerprefix}" stroke="${stroke}"/>
     </xacro:macro>
 
