@@ -55,6 +55,11 @@ class LaunchGenerator(BaseGenerator):
             pass
 
         try:
+            shutil.rmtree(self.platform_extras_launch_path)
+        except FileNotFoundError:
+            pass
+
+        try:
             shutil.rmtree(self.manipulators_launch_path)
         except FileNotFoundError:
             pass
@@ -72,6 +77,15 @@ class LaunchGenerator(BaseGenerator):
                 ('use_sim_time', 'false'),
                 ('namespace', self.namespace),
                 ('enable_ekf', str(self.clearpath_config.platform.enable_ekf).lower()),
+            ])
+
+        self.platform_extras_launch_file = LaunchFile(
+            name='platform_extras',
+            package=self.pkg_clearpath_common,
+            args=[
+                ('setup_path', self.setup_path),
+                ('use_sim_time', 'false'),
+                ('namespace', self.namespace),
             ])
 
         self.manipulators_launch_file = LaunchFile(
@@ -93,6 +107,10 @@ class LaunchGenerator(BaseGenerator):
         self.platform_service_launch_file = LaunchFile(
             name='platform-service',
             path=self.platform_launch_path)
+
+        self.platform_extras_service_launch_file = LaunchFile(
+            name='platform-extras-service',
+            path=self.platform_extras_launch_path)
 
         self.manipulators_service_launch_file = LaunchFile(
             name='manipulators-service',

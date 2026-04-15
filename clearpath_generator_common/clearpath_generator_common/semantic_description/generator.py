@@ -57,7 +57,7 @@ class SemanticDescriptionGenerator(BaseGenerator):
         self.xacro_writer.write_newline()
 
         self.xacro_writer.close_file()
-        print(f'Generated {self.xacro_writer.file_path}robot.srdf.xacro')
+        print(f'Generated {self.xacro_writer.file_path}/robot.srdf.xacro')
 
     def generate_arms(self) -> None:
         self.xacro_writer.write_comment('Arms')
@@ -79,9 +79,9 @@ class SemanticDescriptionGenerator(BaseGenerator):
             for pose in arm.poses:
                 pose_macro = ManipulatorPoseMacro(arm, pose)
                 self.xacro_writer.write_macro(
-                    macro=pose_macro.macro(),
-                    parameters=pose_macro.parameters(),
-                    blocks=pose_macro.blocks(),
+                    macro=pose_macro.macro,
+                    parameters=pose_macro.parameters,
+                    blocks=pose_macro.blocks,
                 )
 
             self.xacro_writer.write_macro(
@@ -113,9 +113,9 @@ class SemanticDescriptionGenerator(BaseGenerator):
             for pose in arm.gripper.poses:
                 pose_macro = ManipulatorPoseMacro(arm.gripper, pose)
                 self.xacro_writer.write_macro(
-                    macro=pose_macro.macro(),
-                    parameters=pose_macro.parameters(),
-                    blocks=pose_macro.blocks(),
+                    macro=pose_macro.macro,
+                    parameters=pose_macro.parameters,
+                    blocks=pose_macro.blocks,
                 )
 
             self.xacro_writer.write_macro(
