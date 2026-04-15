@@ -30,10 +30,7 @@
 # modification, is not permitted without the express permission
 # of Clearpath Robotics.
 from clearpath_config.manipulators.types.arms import Franka
-from clearpath_config.manipulators.types.grippers import (
-    FrankaGripper,
-    Robotiq2F140
-)
+from clearpath_config.manipulators.types.grippers import FrankaGripper
 from clearpath_config.manipulators.types.manipulator import (
     BaseManipulator,
     ManipulatorPose
@@ -42,42 +39,23 @@ from clearpath_config.manipulators.types.manipulator import (
 
 class ManipulatorPoseMacro():
 
-    class BasePoseMacro():
-        NAME = 'name'
-        GROUP_STATE = 'group_state'
-        JOINT_POSITIONS = 'joint_positions'
+    def __init__(self, manipulator: BaseManipulator, pose: ManipulatorPose) -> None:
+        self.manipulator = manipulator
+        self.pose = pose
 
-        def __init__(self, manipulator: BaseManipulator, pose: ManipulatorPose) -> None:
-            self.manipulator = manipulator
-            self.pose = pose
-            # Extract Joint Values
-            joints_string = [f'{joint:.4f}' for joint in self.pose.joints]
-            # Macro
-            self.macro = f'{self.manipulator.MANIPULATOR_MODEL}_group_state'
-            # Parameters
-            self.parameters = {
-                self.NAME: self.manipulator.name,
-                self.GROUP_STATE: self.pose.name,
-                self.JOINT_POSITIONS: f'${{[{", ".join(joints_string)}]}}'
-            }
-            # Blocks
-            self.blocks = None
+    def macro(self) -> str:
+        return f'{self.manipulator.MANIPULATOR_MODEL}_group_state'
 
-    class FrankaPoseMacro(BasePoseMacro):
+    def parameters(self) -> dict:
+        str_joints = [f'{joint:.4f}' for joint in self.pose.joints]
+        return {
+            'name': self.manipulator.name,
+            'group_state': self.pose.name,
+            'joint_positions': f'${{[{", ".join(str_joints)}]}}'
+        }
 
-        def __init__(self, manipulator, pose):
-            super().__init__(manipulator, pose)
-            self.parameters[Franka.ARM_ID] = self.manipulator.arm_id
-
-    MODEL = {
-        Franka.MANIPULATOR_MODEL: FrankaPoseMacro,
-        FrankaGripper.MANIPULATOR_MODEL: FrankaPoseMacro
-    }
-
-    def __new__(cls, manipulator: BaseManipulator, pose: ManipulatorPose) -> BaseManipulator:
-        return ManipulatorPoseMacro.MODEL.setdefault(
-            manipulator.MANIPULATOR_MODEL,
-            ManipulatorPoseMacro.BasePoseMacro)(manipulator, pose)
+    def blocks(self) -> str:
+        return None
 
 
 class ManipulatorSemanticDescription():
@@ -108,21 +86,11 @@ class ManipulatorSemanticDescription():
 
         def __init__(self, manipulator):
             super().__init__(manipulator)
-            self.parameters[self.NAME] = f'{manipulator.name}'
-            self.parameters[Franka.ARM_ID] = f'{manipulator.arm_id}'
-
-    class Robotiq2F140SemanticDescription(BaseSemanticDescription):
-
-        def __init__(self, manipulator):
-            super().__init__(manipulator)
-            urdf_parameters = dict(manipulator.get_urdf_parameters())
-            self.parameters[Robotiq2F140.PADDING] = f"{
-                urdf_parameters.get(Robotiq2F140.PADDING, 'true')}"
+            self.parameters[self.NAME] = f'{manipulator.name}_{manipulator.arm_id}'
 
     MODEL = {
         Franka.MANIPULATOR_MODEL: FrankaSemanticDescription,
-        FrankaGripper.MANIPULATOR_MODEL: FrankaSemanticDescription,
-        Robotiq2F140.MANIPULATOR_MODEL: Robotiq2F140SemanticDescription
+        FrankaGripper.MANIPULATOR_MODEL: FrankaSemanticDescription
     }
 
     def __new__(cls, manipulator: BaseManipulator) -> BaseManipulator:
