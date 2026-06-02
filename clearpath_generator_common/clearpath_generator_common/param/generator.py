@@ -61,6 +61,7 @@ class ParamGenerator(BaseGenerator):
             pass
 
         # Make new directories
+        os.makedirs(os.path.dirname(self.sensors_params_path), exist_ok=True)
         os.makedirs(os.path.dirname(self.platform_params_path), exist_ok=True)
         os.makedirs(os.path.dirname(self.manipulators_params_path), exist_ok=True)
 
