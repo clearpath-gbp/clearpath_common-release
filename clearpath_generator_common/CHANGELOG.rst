@@ -2,6 +2,9 @@
 Changelog for package clearpath_generator_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.10 (2026-07-02)
+-------------------
+
 2.9.9 (2026-06-02)
 ------------------
 * Fixed directory creation. (`#343 <https://github.com/clearpathrobotics/clearpath_common/issues/343>`_)
