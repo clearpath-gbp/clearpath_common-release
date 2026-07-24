@@ -2,6 +2,9 @@
 Changelog for package clearpath_manipulators
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.12 (2026-07-24)
+-------------------
+
 2.9.11 (2026-07-14)
 -------------------
 * Fixed failing controllers by usingsingle spawner call to avoid competing for the ros2-control file lock.
