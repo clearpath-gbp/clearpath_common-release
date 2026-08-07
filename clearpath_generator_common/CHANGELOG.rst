@@ -2,6 +2,9 @@
 Changelog for package clearpath_generator_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.13 (2026-08-07)
+-------------------
+
 2.9.12 (2026-07-24)
 -------------------
 * Fixed bash writer to use single quotes for values containing double q… (`#365 <https://github.com/clearpathrobotics/clearpath_common/issues/365>`_)
