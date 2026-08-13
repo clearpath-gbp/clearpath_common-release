@@ -2,6 +2,9 @@
 Changelog for package clearpath_manipulators_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.12 (2026-08-13)
+-------------------
+
 1.3.11 (2026-06-02)
 -------------------
 * Fix: Robotiq 2F 140 Limits and Padding (`#311 <https://github.com/clearpathrobotics/clearpath_common/issues/311>`_) (`#312 <https://github.com/clearpathrobotics/clearpath_common/issues/312>`_)
