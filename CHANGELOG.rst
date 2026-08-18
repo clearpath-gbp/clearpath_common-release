@@ -2,6 +2,11 @@
 Changelog for package clearpath_bt_joy
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.9.15 (2026-08-18)
+-------------------
+* Fixed logic for BT joy being absent. (`#379 <https://github.com/clearpathrobotics/clearpath_common/issues/379>`_)
+* Contributors: Tony Baltovski
+
 2.9.14 (2026-08-12)
 -------------------
 
