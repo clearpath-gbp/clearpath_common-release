@@ -44,24 +44,7 @@ class BashWriter():
         self.file.write(f'{self.tab * indent_level}{string}\n')
 
     def add_export(self, envar: str, value, indent_level=0):
-        value = str(value)
-        if (
-            value.startswith('"') and value.endswith('"')
-        ) or (
-            value.startswith("'") and value.endswith("'")
-        ):
-            self.write(f'{self.tab * indent_level}export {envar}={value}')
-        else:
-            has_double_quotes = '"' in value
-            has_single_quotes = "'" in value
-
-            if has_double_quotes and not has_single_quotes:
-                self.write(f"{self.tab * indent_level}export {envar}='{value}'")
-            elif has_single_quotes and has_double_quotes:
-                escaped_value = value.replace('"', '\\"')
-                self.write(f'{self.tab * indent_level}export {envar}="{escaped_value}"')
-            else:
-                self.write(f'{self.tab * indent_level}export {envar}="{value}"')
+        self.write(f'{self.tab * indent_level}export {envar}={value}')
 
     def add_unset(self, envar: str, indent_level=0):
         self.write(f'{self.tab * indent_level}unset {envar}')
@@ -71,9 +54,6 @@ class BashWriter():
 
     def add_echo(self, msg: str, indent_level=0):
         self.write(f'{self.tab * indent_level}echo "{msg}"')
-
-    def add_comment(self, msg: str, indent_level=0):
-        self.write(f'{self.tab * indent_level}# {msg}')
 
     def close(self):
         self.file.close()
