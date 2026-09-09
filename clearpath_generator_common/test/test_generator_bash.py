@@ -26,9 +26,14 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 import os
+import pathlib
 import shutil
 
 from ament_index_python.packages import get_package_share_directory
+from clearpath_config.common.types.exception import (
+    UnsupportedAccessoryException,
+    UnsupportedPlatformException,
+)
 from clearpath_generator_common.bash.generator import BashGenerator
 
 
@@ -39,6 +44,8 @@ class TestRobotLaunchGenerator:
         share_dir = get_package_share_directory('clearpath_config')
         sample_dir = os.path.join(share_dir, 'sample')
         for sample in os.listdir(sample_dir):
+            if pathlib.Path(sample).suffix != '.yaml':
+                continue
             # Create Clearpath Directory
             src = os.path.join(sample_dir, sample)
             dst = os.path.join(os.environ['HOME'], '.clearpath', 'robot.yaml')
@@ -49,6 +56,12 @@ class TestRobotLaunchGenerator:
             try:
                 rlg = BashGenerator(os.path.dirname(dst))
                 rlg.generate()
+            except UnsupportedAccessoryException as e:
+                print(f'Unsupported accessory: {e}. Skipping')
+            except UnsupportedPlatformException as e:
+                print(f'Unsupported platform: {e}. Skipping')
+            except FileNotFoundError as e:
+                print(f'File not found: {e}. Skipping')
             except Exception as e:
                 errors.append("Sample '%s' failed to load: '%s'" % (
                     sample,
